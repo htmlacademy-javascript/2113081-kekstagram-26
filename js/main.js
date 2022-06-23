@@ -4,11 +4,13 @@ function getRandomNumber (minNumber, maxNumber) {
     const rand = minNumber + Math.random() * (maxNumber + 1 - minNumber);
     return Math.floor(rand);
   }
-  console.log('Неверный диапазон');
+  return false;
 }
 getRandomNumber (1, 100);
 
-function compareString (stringComment, maxLengthComment) {
+let stringComment;
+let maxLengthComment;
+function compareString () {
   stringComment = stringComment.length;
   if (stringComment <= maxLengthComment) {
     return true;
