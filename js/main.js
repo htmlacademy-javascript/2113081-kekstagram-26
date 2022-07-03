@@ -120,4 +120,8 @@ function giveIndexPhoto(_, id) {
   return createUsersPhoto(id + 1);
 }
 
-const usersPhotos = Array.from({ length: 25 }).map(giveIndexPhoto);
+function getArrUsersPhotos () {
+  const usersPhotos = Array.from({ length: 25 }).map(giveIndexPhoto);
+  return usersPhotos;
+}
+getArrUsersPhotos();
