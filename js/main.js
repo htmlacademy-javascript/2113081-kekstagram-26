@@ -6,3 +6,5 @@ import './filtre.js';
 import './post-data.js';
 import './upload-photo.js';
 import './big-picture-popup.js';
+import './upload-image-form.js';
+import './upload-image-validation.js';
