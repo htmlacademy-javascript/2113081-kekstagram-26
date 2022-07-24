@@ -32,6 +32,9 @@ function createComment ({ avatar, message, nameUser }) {
 
 allPhotos.addEventListener('click', (evt) => {
   const selectedPicture = evt.target.closest('.picture');
+  if (!selectedPicture) {
+    return;
+  }
   const imageSrc = selectedPicture.querySelector('.picture__img').getAttribute('src');
   const commentsBlock = bigPictureContainer.querySelector('.social__comments');
   const pictureInfo = usersPhotos.find((photo) => photo.url === imageSrc);
