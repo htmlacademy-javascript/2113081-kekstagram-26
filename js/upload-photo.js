@@ -7,7 +7,6 @@ const usersPhotos = getArrUsersPhotos();
 
 const userPhotoFragment = document.createDocumentFragment();
 
-
 usersPhotos.forEach(({likes, url, comment}) => {
   const photoElement = userPictureTemplate.cloneNode(true);
   photoElement.querySelector('.picture__likes').textContent = likes;
@@ -18,3 +17,4 @@ usersPhotos.forEach(({likes, url, comment}) => {
 
 photoContainer.append(userPhotoFragment);
 
+export { usersPhotos };
