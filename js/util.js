@@ -8,7 +8,6 @@ function getRandomPositiveInteger(a, b) {
 function checkStringLength (string, length) {
   return string.length <= length;
 }
-checkStringLength();
 
 function getRandomArrElement(elements) {
   return elements[getRandomPositiveInteger(0, elements.length - 1)];
