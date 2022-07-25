@@ -17,4 +17,18 @@ function isEscapeKey (evt) {
   return evt.key === 'Escape';
 }
 
-export {getRandomPositiveInteger, checkStringLength, getRandomArrElement, isEscapeKey};
+function getArrRange (currentArray, range, part) {
+  const start = range * (part - 1);
+  const end = (range * part);
+  return currentArray.slice(start, end);
+}
+
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { getRandomPositiveInteger, checkStringLength, getRandomArrElement, isEscapeKey, getArrRange, debounce };

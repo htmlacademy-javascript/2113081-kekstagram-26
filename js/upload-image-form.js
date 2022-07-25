@@ -17,6 +17,8 @@ const sliderElement = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
+const effectLevelValueInput = document.querySelector('.effect-level__value');
+const uploadBuutton = document.querySelector('.img-upload__submit');
 
 const effects = {
   chrome: {
@@ -90,6 +92,7 @@ const effects = {
 
 function handleFiles() {
   const fileList = this.files;
+  uploadBuutton.disabled = false;
 
   if (fileList.length > 0) {
     uploadOverlay.classList.remove('hidden');
@@ -127,13 +130,18 @@ function setEffect(evt) {
   }
 
   if (effect === 'none') {
+    effectLevelValueInput.value = '';
+
     return;
   }
 
-  noUiSlider.create(sliderElement, effects[effect].sliderOptions);
+  const sliderOptions = effects[effect].sliderOptions;
+  noUiSlider.create(sliderElement, sliderOptions);
+  effectLevelValueInput.value = sliderOptions.start;
   sliderElement.noUiSlider.on('change', (value) => {
     imagePreview.style.filter = effects[effect].filterName(value[0]);
     sliderValue.value = value[0];
+    effectLevelValueInput.value = value[0];
   });
   imagePreview.classList.add(`effects__preview--${effect}`);
 }
@@ -190,3 +198,14 @@ function preventClose (evt) {
 }
 
 fileInput.addEventListener('change', handleFiles);
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  uploadBuutton.disabled = true;
+  fetch(evt.target.action, {
+    method: 'POST',
+    body: new FormData(evt.target)
+  }).then((response) => response.json())
+    .then(() => {
+      handleClose();
+    });
+});

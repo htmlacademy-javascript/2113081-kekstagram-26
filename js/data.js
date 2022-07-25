@@ -68,7 +68,7 @@ function createComment() {
 }
 
 function getRandomQuantityComment () {
-  return Array.from({length:getRandomPositiveInteger(1, 5)}, createComment);
+  return Array.from({length:getRandomPositiveInteger(1, 20)}, createComment);
 }
 
 function createUsersPhoto(id) {

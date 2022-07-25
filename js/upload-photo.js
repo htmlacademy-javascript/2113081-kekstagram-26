@@ -1,20 +1,32 @@
-import {getArrUsersPhotos} from './data.js';
-
+import { getPhotos } from './server.js';
 
 const photoContainer = document.querySelector('.pictures');
 const userPictureTemplate = document.querySelector('#picture').content;
-const usersPhotos = getArrUsersPhotos();
+const filtersBlock = document.querySelector('.img-filters');
 
-const userPhotoFragment = document.createDocumentFragment();
+let usersPhotos;
 
-usersPhotos.forEach(({likes, url, comment}) => {
-  const photoElement = userPictureTemplate.cloneNode(true);
-  photoElement.querySelector('.picture__likes').textContent = likes;
-  photoElement.querySelector('.picture__img').src = url;
-  photoElement.querySelector('.picture__comments').textContent = comment.length;
-  photoContainer.append(photoElement);
+function fillWithPhotos (data) {
+  const userPhotoFragment = document.createDocumentFragment();
+
+  data.forEach(({likes, url, comments}) => {
+    const photoElement = userPictureTemplate.cloneNode(true);
+    photoElement.querySelector('.picture__likes').textContent = likes;
+    photoElement.querySelector('.picture__img').src = url;
+    photoElement.querySelector('.picture__comments').textContent = comments.length;
+    photoContainer.append(photoElement);
+  });
+
+  photoContainer.append(userPhotoFragment);
+}
+
+getPhotos().then((data) => {
+  fillWithPhotos(data);
+  filtersBlock.classList.remove('img-filters--inactive');
+  usersPhotos = data;
+}).catch(() => {
+  document.querySelector('.fetch-error').classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
 });
 
-photoContainer.append(userPhotoFragment);
-
-export { usersPhotos };
+export { usersPhotos, fillWithPhotos };
