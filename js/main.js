@@ -6,3 +6,5 @@ import './big-picture-popup.js';
 import './upload-image-form.js';
 import './upload-image-validation.js';
 import './server.js';
+import './add-photo.js';
+import './success-err-message.js';

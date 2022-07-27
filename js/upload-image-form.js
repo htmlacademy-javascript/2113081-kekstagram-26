@@ -1,4 +1,7 @@
-import { isEscapeKey } from './util.js';
+import { isCorrectFileExtension, isEscapeKey } from './util.js';
+import { openErrorMessage, openSuccessMessage } from './success-err-message.js';
+import { pristine } from './upload-image-validation.js';
+import { addPhoto } from './add-photo.js';
 
 const MIN_SCALE = 0.25;
 const MAX_SCALE = 1;
@@ -18,7 +21,7 @@ const sliderValue = document.querySelector('.effect-level__value');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
 const effectLevelValueInput = document.querySelector('.effect-level__value');
-const uploadBuutton = document.querySelector('.img-upload__submit');
+const uploadButton = document.querySelector('.img-upload__submit');
 
 const effects = {
   chrome: {
@@ -92,7 +95,7 @@ const effects = {
 
 function handleFiles() {
   const fileList = this.files;
-  uploadBuutton.disabled = false;
+  uploadButton.disabled = false;
 
   if (fileList.length > 0) {
     uploadOverlay.classList.remove('hidden');
@@ -144,6 +147,7 @@ function setEffect(evt) {
     effectLevelValueInput.value = value[0];
   });
   imagePreview.classList.add(`effects__preview--${effect}`);
+  imagePreview.style.filter = effects[effect].filterName(sliderOptions.start);
 }
 
 function scaleSmaller() {
@@ -174,6 +178,7 @@ function handleClose() {
   }
 
   imagePreview.style.filter = '';
+  imagePreview.style.transform = '';
   imagePreview.className = '';
   document.querySelector('body').classList.remove('modal-open');
   uploadOverlay.classList.add('hidden');
@@ -200,12 +205,39 @@ function preventClose (evt) {
 fileInput.addEventListener('change', handleFiles);
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  uploadBuutton.disabled = true;
-  fetch(evt.target.action, {
+  const formData = new FormData(evt.target);
+
+  if (!pristine.validate() || !isCorrectFileExtension(formData.get('filename'))) {
+    return;
+  }
+
+  uploadButton.disabled = true;
+
+  const config = {
     method: 'POST',
-    body: new FormData(evt.target)
-  }).then((response) => response.json())
-    .then(() => {
-      handleClose();
+    body: formData,
+  };
+
+  fetch(evt.target.action, config)
+    .then((response) => {
+      uploadOverlay.classList.add('hidden');
+      uploadButton.disabled = false;
+
+      if (response.ok) {
+        openSuccessMessage(handleClose);
+        addPhoto(
+          formData.get('filename'),
+          formData.get('description'),
+          formData.get('hashtags'),
+          imagePreview.style.transform,
+          imagePreview.style.filter,
+        );
+
+        return;
+      }
+
+      openErrorMessage(handleClose);
+    }).catch(() => {
+      openErrorMessage(handleClose);
     });
 });

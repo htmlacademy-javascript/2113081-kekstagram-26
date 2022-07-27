@@ -1427,3 +1427,12 @@ main {
   text-align: center;
   border-radius: 12px;
 }
+
+.img-upload__field-with-error > input {
+  margin-bottom: 0;
+}
+
+.img-upload__field-error {
+  color: red;
+  text-transform: none;
+}

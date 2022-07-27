@@ -32,7 +32,7 @@ function createComment ({ avatar, message, nameUser }) {
   return comment;
 }
 
-function openChoosenPhoto (evt) {
+function openChosenPhoto (evt) {
   const selectedPicture = evt.target.closest('.picture');
   if (!selectedPicture) {
     return;
@@ -46,6 +46,14 @@ function openChoosenPhoto (evt) {
   bigPicture.src = pictureInfo.url;
   bigPictureContainer.querySelector('.likes-count').textContent = pictureInfo.likes;
   commentCount.textContent = pictureInfo.comments.length;
+
+  if (pictureInfo.scale) {
+    bigPicture.style.transform = pictureInfo.scale;
+  }
+
+  if (pictureInfo.filter) {
+    bigPicture.style.filter = pictureInfo.filter;
+  }
 
   commentsBlock.innerHTML = '';
   openNextCommentsFunc = openNextComments(pictureInfo.comments);
@@ -82,6 +90,8 @@ function onClose () {
   document.removeEventListener('click', onClose);
   commentLoader.removeEventListener('click', openNextCommentsFunc);
   visibleCommentsArray = [];
+  bigPicture.style.transform = '';
+  bigPicture.style.filter = '';
 }
 
 function onPopupEscKeydown (evt) {
@@ -91,5 +101,5 @@ function onPopupEscKeydown (evt) {
   }
 }
 
-allPhotos.addEventListener('click', openChoosenPhoto);
+allPhotos.addEventListener('click', openChosenPhoto);
 closeButton.addEventListener('click', onClose);

@@ -31,4 +31,11 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export { getRandomPositiveInteger, checkStringLength, getRandomArrElement, isEscapeKey, getArrRange, debounce };
+function isCorrectFileExtension (file) {
+  const fileName = file.name.toLowerCase();
+  const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
+}
+
+export { getRandomPositiveInteger, checkStringLength, getRandomArrElement, isEscapeKey, getArrRange, debounce, isCorrectFileExtension };
