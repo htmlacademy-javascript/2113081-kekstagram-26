@@ -1,3 +1,5 @@
+//Данный модуль используется только для генерации данных в начале обучающего курса
+
 import {getRandomPositiveInteger, getRandomArrElement} from './util.js';
 
 const COMMENT_IDS = [];
