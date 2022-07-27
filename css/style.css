@@ -1408,3 +1408,31 @@ main {
 .hidden {
   display: none;
 }
+
+.fetch-error p {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(255, 0, 0);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.img-upload__field-with-error > input {
+  margin-bottom: 0;
+}
+
+.img-upload__field-error {
+  color: red;
+  text-transform: none;
+}

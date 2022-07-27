@@ -1,3 +1,5 @@
+//Данный модуль используется только для генерации данных в начале обучающего курса
+
 import {getRandomPositiveInteger, getRandomArrElement} from './util.js';
 
 const COMMENT_IDS = [];
@@ -68,7 +70,7 @@ function createComment() {
 }
 
 function getRandomQuantityComment () {
-  return Array.from({length:getRandomPositiveInteger(1, 5)}, createComment);
+  return Array.from({length:getRandomPositiveInteger(1, 20)}, createComment);
 }
 
 function createUsersPhoto(id) {
