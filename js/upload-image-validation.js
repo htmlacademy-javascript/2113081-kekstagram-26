@@ -9,11 +9,12 @@ const pristine = new Pristine(form, {
 });
 
 const regex = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+const MAX_AMOUNT_HASH_TAGS = 5;
 
 function testHashtagsLength (hashtags) {
   const hashtagArray = hashtags.toLowerCase().split(' ');
 
-  return hashtagArray.length <= 5;
+  return hashtagArray.length <= MAX_AMOUNT_HASH_TAGS;
 }
 
 function testUniqueHashtags (hashtags) {
