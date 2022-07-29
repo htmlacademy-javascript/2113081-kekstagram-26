@@ -11,8 +11,9 @@ function getDefaultPhotos () {
 function getRandomPhotos () {
   const randomIndexes = [];
   const randomPhotos = [];
+  let indexPhoto = 0;
 
-  for (let index = 0; index < 10; index++) {
+  for (indexPhoto; indexPhoto < 10; indexPhoto++) {
     let newIndex = getRandomPositiveInteger(0, usersPhotos.length - 1);
 
     while (randomIndexes.includes(newIndex)) {
